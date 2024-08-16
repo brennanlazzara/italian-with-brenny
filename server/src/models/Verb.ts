@@ -19,6 +19,10 @@ const VerbSchema: Schema = new Schema({
     required: true,
     unique: true
   },
+  definition: {
+    type: String,
+    required: true,
+  },
   type: {
     type: String,
     enum: ['are', 'ere', 'ire'],

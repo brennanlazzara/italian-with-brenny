@@ -30,6 +30,7 @@ const FlashCard = () => {
   const [pronoun, setPronoun] = useState("");
   const [verb, setVerb] = useState("");
   const [verbType, setVerbType] = useState("");
+  const [verbDefinition, setVerbDefinition] = useState("");
   const [pronouns, setPronouns] = useState<string[]>([]);
   const [pronounType, setPronounType] = useState("");
   const [userAnswer, setUserAnswer] = useState("");
@@ -81,9 +82,9 @@ const FlashCard = () => {
       const data = await response.json();
       setVerb(data.infinitive);
       setVerbType(data.type);
+      setVerbDefinition(data.definition); // Store the definition
     } catch (error) {
       console.error("Error fetching random verb:", error);
-      // Optionally, set an error state here
     } finally {
       setIsLoading(false);
     }
@@ -115,9 +116,15 @@ const FlashCard = () => {
 
   const checkAnswer = () => {
     const correctAnswer = conjugatePresenteIndicativo(pronoun, verb);
-    setIsCorrect(
-      userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase()
-    );
+    const isAnswerCorrect =
+      userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase();
+    setIsCorrect(isAnswerCorrect);
+
+    if (isAnswerCorrect) {
+      setTimeout(() => {
+        getNewCard();
+      }, 1000);
+    }
   };
 
   const handleFlip = () => {
@@ -141,17 +148,17 @@ const FlashCard = () => {
   const getHint = () => {
     if (verbType === "are") {
       return {
-        type: "This is an -ARE verb.",
+        type: `This is an -ARE verb. (${verbDefinition})`,
         endings: ["-o", "-i", "-a", "-iamo", "-ate", "-ano"],
       };
     } else if (verbType === "ere") {
       return {
-        type: "This is an -ERE verb.",
+        type: `This is an -ERE verb. (${verbDefinition})`,
         endings: ["-o", "-i", "-e", "-iamo", "-ete", "-ono"],
       };
     } else if (verbType === "ire") {
       return {
-        type: "This is an -IRE verb.",
+        type: `This is an -IRE verb. (${verbDefinition})`,
         endings: ["-o", "-i", "-e", "-iamo", "-ite", "-ono"],
       };
     }
@@ -176,65 +183,6 @@ const FlashCard = () => {
           <Heading fontSize="xl">Presente Indicativo</Heading>
           <InfoIcon onClick={onOpen} cursor="pointer" />
         </HStack>
-
-        <AlertDialog
-          isOpen={isOpen}
-          leastDestructiveRef={cancelRef}
-          onClose={onClose}
-        >
-          <AlertDialogOverlay
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <AlertDialogContent
-              maxW="400px"
-              width="90%"
-              position="relative"
-              mx="auto"
-            >
-              <AlertDialogHeader
-                fontSize="xl"
-                fontWeight="bold"
-                textAlign="center"
-                pb={2}
-              >
-                <HStack justify="center" spacing={2}>
-                  <FaLightbulb color="#F6E05E" />{" "}
-                  {/* Yellow color for the lightbulb */}
-                  <Text>Conjugation Hint</Text>
-                </HStack>
-              </AlertDialogHeader>
-
-              <Divider borderColor="gray.300" borderWidth="2px" />
-
-              <AlertDialogBody pt={4}>
-                <VStack align="center" spacing={4} py={4}>
-                  <Text fontSize="lg" fontWeight="medium" color="blue.600">
-                    {hint.type}
-                  </Text>
-                  <Text fontSize="md">Common endings:</Text>
-                  <Text fontSize="lg" fontWeight="bold" color="green.600">
-                    {hint.endings.join(" · ")}
-                  </Text>
-                </VStack>
-              </AlertDialogBody>
-
-              <AlertDialogFooter justifyContent="center">
-                <Button
-                  ref={cancelRef}
-                  onClick={onClose}
-                  colorScheme="blue"
-                  size="lg"
-                  px={8}
-                >
-                  Got it!
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
-
         {isLoading ? (
           <Spinner />
         ) : (
@@ -303,6 +251,59 @@ const FlashCard = () => {
             )}
           </>
         )}
+        {/* HINT DIALOG */}
+        <AlertDialog
+          isOpen={isOpen}
+          leastDestructiveRef={cancelRef}
+          onClose={onClose}
+        >
+          <AlertDialogOverlay
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <AlertDialogContent
+              maxW="400px"
+              width="90%"
+              position="relative"
+              mx="auto"
+            >
+              <AlertDialogHeader
+                fontSize="xl"
+                fontWeight="bold"
+                textAlign="center"
+                pb={2}
+              >
+                <HStack justify="center" spacing={2}>
+                  <FaLightbulb color="#F6E05E" /> <Text>Conjugation Hint</Text>
+                </HStack>
+              </AlertDialogHeader>
+              <Divider borderColor="gray.300" borderWidth="2px" />
+              <AlertDialogBody pt={4}>
+                <VStack align="center" spacing={4} py={4}>
+                  <Text fontSize="lg" fontWeight="medium" color="blue.600">
+                    {hint.type}
+                  </Text>
+                  <Text fontSize="md">Common endings:</Text>
+                  <Text fontSize="lg" fontWeight="bold" color="green.600">
+                    {hint.endings.join(" · ")}
+                  </Text>
+                </VStack>
+              </AlertDialogBody>
+              <AlertDialogFooter justifyContent="center">
+                <Button
+                  ref={cancelRef}
+                  onClick={onClose}
+                  colorScheme="blue"
+                  size="lg"
+                  px={8}
+                >
+                  Got it!
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
       </VStack>
     </Box>
   );
