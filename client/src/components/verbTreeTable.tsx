@@ -1,42 +1,54 @@
+import React from "react";
 import {
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Th,
-    Td,
-    TableContainer,
-  } from "@chakra-ui/react";
-  
-  function VerbConjugationTable() {
-    return (
-      <TableContainer>
-        <Table variant="striped" colorScheme="teal">
-          <Thead>
-            <Tr>
-              <Th>Singular</Th>
-              <Th>-Plural</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            <Tr>
-              <Td>I = Io</Td>
-              <Td>We = Noi</Td>
-            </Tr>
-            <Tr>
-              <Td>You = Tu</Td>
-              <Td>-You All = Voi</Td>
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+} from "@chakra-ui/react";
 
-            </Tr>
-            <Tr>
-              <Td>He/She = Lui/Lei</Td>
-              <Td>They = Loro</Td>
+interface VerbConjugationTableProps {
+  verbType: "are" | "ere" | "ire" | "fourthType";
+}
 
-            </Tr>
-          </Tbody>
-        </Table>
-      </TableContainer>
-    );
-  }
-  
-  export default VerbConjugationTable;
+const conjugationEndings: { [key: string]: string[] } = {
+  are: ["o", "i", "a", "iamo", "ate", "ano"],
+  ere: ["o", "i", "e", "iamo", "ete", "ono"],
+  ire: ["o", "i", "e", "iamo", "ite", "ono"],
+  fourthType: ["some", "custom", "endings", "for", "fourth", "type"],
+};
+
+function VerbConjugationTable({ verbType }: VerbConjugationTableProps) {
+  const endings = conjugationEndings[verbType];
+
+  return (
+    <TableContainer>
+      <Table variant="striped" colorScheme="teal">
+        <Thead>
+          <Tr>
+            <Th>Singular</Th>
+            <Th>Plural</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          <Tr>
+            <Td>Io = {endings[0]}</Td>
+            <Td>Noi = {endings[3]}</Td>
+          </Tr>
+          <Tr>
+            <Td>Tu = {endings[1]}</Td>
+            <Td>Voi = {endings[4]}</Td>
+          </Tr>
+          <Tr>
+            <Td>Lui/Lei = {endings[2]}</Td>
+            <Td>Loro = {endings[5]}</Td>
+          </Tr>
+        </Tbody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+export default VerbConjugationTable;

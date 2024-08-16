@@ -26,10 +26,20 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  Grid,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { InfoIcon } from "@chakra-ui/icons";
 import VerbConjugationTable from "./verbTreeTable";
+
+// Define tables for each verb type
+const AreVerbTable = () => <VerbConjugationTable verbType="are" />;
+
+const EreVerbTable = () => <VerbConjugationTable verbType="ere" />;
+
+const IreVerbTable = () => <VerbConjugationTable verbType="ire" />;
+
+const FourthVerbTable = () => <VerbConjugationTable verbType="fourthType" />;
 
 const FlashCard = () => {
   const [pronoun, setPronoun] = useState("");
@@ -262,9 +272,10 @@ const FlashCard = () => {
             )}
           </>
         )}
-        <Button colorScheme="teal" onClick={onModalOpen}>
+        <Button colorScheme="green" onClick={onModalOpen}>
           View My Helpful Verb Tree Graphs
         </Button>
+
         <Text textAlign="center">
           To conjugate regular Italian verbs in the{" "}
           <b>*Presente Indicativo* </b>
@@ -278,18 +289,39 @@ const FlashCard = () => {
           *-ono*. <br /> Just follow this pattern to correctly conjugate most
           verbs in the present tense!
         </Text>
-
         {/* Verb Tree Graph Dialog */}
-        <Modal isOpen={isModalOpen} onClose={onModalClose}>
+        <Modal isOpen={isModalOpen} onClose={onModalClose} size="2xl">
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Verb Tree Graphs</ModalHeader>
             <ModalCloseButton />
-            <ModalBody>
-              <VerbConjugationTable />
-              <VerbConjugationTable />
-              <VerbConjugationTable />
-              <VerbConjugationTable  />
+            <ModalBody overflow="auto" p={4}>
+              <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+                <Box mb={4} overflow="hidden">
+                  <Text fontSize="lg" fontWeight="bold" mb={2}>
+                    ARE
+                  </Text>
+                  <AreVerbTable />
+                </Box>
+                <Box mb={4} overflow="hidden">
+                  <Text fontSize="lg" fontWeight="bold" mb={2}>
+                    ERE
+                  </Text>
+                  <EreVerbTable />
+                </Box>
+                <Box mb={4} overflow="hidden">
+                  <Text fontSize="lg" fontWeight="bold" mb={2}>
+                    IRE
+                  </Text>
+                  <IreVerbTable />
+                </Box>
+                <Box mb={4} overflow="hidden">
+                  <Text fontSize="lg" fontWeight="bold" mb={2}>
+                    Fourth
+                  </Text>
+                  <FourthVerbTable />
+                </Box>
+              </Grid>
             </ModalBody>
           </ModalContent>
         </Modal>
