@@ -19,12 +19,17 @@ import {
   AlertDialogHeader,
   AlertDialogBody,
   AlertDialogFooter,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { InfoIcon } from "@chakra-ui/icons";
-
-// import { get } from "http";
+import VerbConjugationTable from "./verbTreeTable";
 
 const FlashCard = () => {
   const [pronoun, setPronoun] = useState("");
@@ -40,6 +45,12 @@ const FlashCard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
+
+  const {
+    isOpen: isModalOpen,
+    onOpen: onModalOpen,
+    onClose: onModalClose,
+  } = useDisclosure();
 
   useEffect(() => {
     fetchRandomPronoun();
@@ -251,16 +262,38 @@ const FlashCard = () => {
             )}
           </>
         )}
-          <Text textAlign="center">
-            To conjugate regular Italian verbs in the <b>*Presente Indicativo* </b> 
-            tense, start with the verb's infinitive form. <br /> For <b>*-ARE* </b> 
-            verbs, remove *-ARE* and add endings like *-o*, *-i*, *-a*, *-iamo*,
-            *-ate*, *-ano*. <br /> For <b>*-ERE* </b>  verbs, drop *-ERE*  and use endings
-            like *-o*, *-i*, *-e*, *-iamo*, *-ete*, *-ono*. <br /> For <b>*-IRE* </b> 
-            verbs, remove *-IRE* and attach *-o*, *-i*, *-e*, *-iamo*, *-it e*,
-            *-ono*. <br /> Just follow this pattern to correctly conjugate most
-            verbs in the present tense!
-          </Text>
+        <Button colorScheme="teal" onClick={onModalOpen}>
+          View My Helpful Verb Tree Graphs
+        </Button>
+        <Text textAlign="center">
+          To conjugate regular Italian verbs in the{" "}
+          <b>*Presente Indicativo* </b>
+          tense, start with the verb's infinitive form. <br /> For{" "}
+          <b>*-ARE* </b>
+          verbs, remove *-ARE* and add endings like *-o*, *-i*, *-a*, *-iamo*,
+          *-ate*, *-ano*. <br /> For <b>*-ERE* </b> verbs, drop *-ERE* and use
+          endings like *-o*, *-i*, *-e*, *-iamo*, *-ete*, *-ono*. <br /> For{" "}
+          <b>*-IRE* </b>
+          verbs, remove *-IRE* and attach *-o*, *-i*, *-e*, *-iamo*, *-it e*,
+          *-ono*. <br /> Just follow this pattern to correctly conjugate most
+          verbs in the present tense!
+        </Text>
+
+        {/* Verb Tree Graph Dialog */}
+        <Modal isOpen={isModalOpen} onClose={onModalClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Verb Tree Graphs</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <VerbConjugationTable />
+              <VerbConjugationTable />
+              <VerbConjugationTable />
+              <VerbConjugationTable  />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+
         {/* HINT DIALOG */}
         <AlertDialog
           isOpen={isOpen}
