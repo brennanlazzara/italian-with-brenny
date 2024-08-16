@@ -251,6 +251,16 @@ const FlashCard = () => {
             )}
           </>
         )}
+          <Text textAlign="center">
+            To conjugate regular Italian verbs in the <b>*Presente Indicativo* </b> 
+            tense, start with the verb's infinitive form. <br /> For <b>*-ARE* </b> 
+            verbs, remove *-ARE* and add endings like *-o*, *-i*, *-a*, *-iamo*,
+            *-ate*, *-ano*. <br /> For <b>*-ERE* </b>  verbs, drop *-ERE*  and use endings
+            like *-o*, *-i*, *-e*, *-iamo*, *-ete*, *-ono*. <br /> For <b>*-IRE* </b> 
+            verbs, remove *-IRE* and attach *-o*, *-i*, *-e*, *-iamo*, *-it e*,
+            *-ono*. <br /> Just follow this pattern to correctly conjugate most
+            verbs in the present tense!
+          </Text>
         {/* HINT DIALOG */}
         <AlertDialog
           isOpen={isOpen}
