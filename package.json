@@ -1,0 +1,13 @@
+{
+    "name": "italian-verb-conjugation-app",
+    "version": "1.0.0",
+    "scripts": {
+      "start": "concurrently -n \"SERVER,CLIENT\" -c \"red,green\" \"npm run server\" \"npm run client\"",
+      "server": "npm run dev --prefix server",
+      "client": "npm start --prefix client"
+    },
+    "devDependencies": {
+      "concurrently": "^6.3.0"
+    }
+  }
+  
