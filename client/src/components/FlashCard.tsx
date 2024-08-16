@@ -34,11 +34,8 @@ import VerbConjugationTable from "./verbTreeTable";
 
 // Define tables for each verb type
 const AreVerbTable = () => <VerbConjugationTable verbType="are" />;
-
 const EreVerbTable = () => <VerbConjugationTable verbType="ere" />;
-
 const IreVerbTable = () => <VerbConjugationTable verbType="ire" />;
-
 const FourthVerbTable = () => <VerbConjugationTable verbType="fourthType" />;
 
 const FlashCard = () => {
@@ -60,6 +57,12 @@ const FlashCard = () => {
     isOpen: isModalOpen,
     onOpen: onModalOpen,
     onClose: onModalClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isLessonModalOpen,
+    onOpen: onLessonModalOpen,
+    onClose: onLessonModalClose,
   } = useDisclosure();
 
   useEffect(() => {
@@ -273,22 +276,12 @@ const FlashCard = () => {
           </>
         )}
         <Button colorScheme="green" onClick={onModalOpen}>
-          View My Helpful Verb Tree Graphs
+          View My Verb Tree Graphs
+        </Button>
+        <Button colorScheme="green" onClick={onLessonModalOpen}>
+          A Helpful Lesson
         </Button>
 
-        <Text textAlign="center">
-          To conjugate regular Italian verbs in the{" "}
-          <b>*Presente Indicativo* </b>
-          tense, start with the verb's infinitive form. <br /> For{" "}
-          <b>*-ARE* </b>
-          verbs, remove *-ARE* and add endings like *-o*, *-i*, *-a*, *-iamo*,
-          *-ate*, *-ano*. <br /> For <b>*-ERE* </b> verbs, drop *-ERE* and use
-          endings like *-o*, *-i*, *-e*, *-iamo*, *-ete*, *-ono*. <br /> For{" "}
-          <b>*-IRE* </b>
-          verbs, remove *-IRE* and attach *-o*, *-i*, *-e*, *-iamo*, *-it e*,
-          *-ono*. <br /> Just follow this pattern to correctly conjugate most
-          verbs in the present tense!
-        </Text>
         {/* Verb Tree Graph Dialog */}
         <Modal isOpen={isModalOpen} onClose={onModalClose} size="2xl">
           <ModalOverlay />
@@ -322,6 +315,34 @@ const FlashCard = () => {
                   <FourthVerbTable />
                 </Box>
               </Grid>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+
+        {/* Helpful Lesson Modal */}
+        <Modal
+          isOpen={isLessonModalOpen}
+          onClose={onLessonModalClose}
+          size="lg"
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>A Helpful Lesson</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody p={4}>
+              <Text textAlign="center">
+                To conjugate regular Italian verbs in the{" "}
+                <b>*Presente Indicativo* </b>
+                tense, start with the verb's infinitive form. <br /> For{" "}
+                <b>*-ARE* </b>
+                verbs, remove *-ARE* and add endings like *-o*, *-i*, *-a*,
+                *-iamo*, *-ate*, *-ano*. <br /> For <b>*-ERE* </b> verbs, drop
+                *-ERE* and use endings like *-o*, *-i*, *-e*, *-iamo*, *-ete*,
+                *-ono*. <br /> For <b>*-IRE* </b> verbs, remove *-IRE* and
+                attach *-o*, *-i*, *-e*, *-iamo*, *-ite*, *-ono*. <br /> Just
+                follow this pattern to correctly conjugate most verbs in the
+                present tense!
+              </Text>
             </ModalBody>
           </ModalContent>
         </Modal>
