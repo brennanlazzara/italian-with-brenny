@@ -49,10 +49,10 @@ const FlashCard = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "http://localhost:5001/api/pronouns/random/subject"
+        `${process.env.REACT_APP_API_LOCAL_URL}/api/pronouns/random/subject`
       );
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error(`Network response was not ok: ${response.statusText}`);
       }
       const data = await response.json();
       if (data && data.pronouns && data.pronouns.length > 0) {
@@ -64,7 +64,6 @@ const FlashCard = () => {
       }
     } catch (error) {
       console.error("Error fetching random pronoun:", error);
-      // Optionally, set an error state here
     } finally {
       setIsLoading(false);
     }
@@ -73,8 +72,9 @@ const FlashCard = () => {
   const fetchRandomVerb = async () => {
     setIsLoading(true);
     try {
-      // ENV THIS URL VARIABLE BELOW
-      const response = await fetch("http://localhost:5001/api/verbs/random");
+      const response = await fetch(
+        `${process.env.REACT_APP_API_LOCAL_URL}/api/verbs/random`
+      );
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
