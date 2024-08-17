@@ -6,7 +6,7 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import FlashCard from "../components/FlashCard";
+import PresenteIndicativoCard from "../components/PresenteIndicativoCard";
 import Header from "../components/Header";
 
 const VerbConjugation = () => {
@@ -22,7 +22,7 @@ const VerbConjugation = () => {
             Master Italian verb conjugations with my interactive flashcards!
           </Text>
           <Box w="full" maxW="md">
-            <FlashCard />
+            <PresenteIndicativoCard />
           </Box>
         </VStack>
       </Container>

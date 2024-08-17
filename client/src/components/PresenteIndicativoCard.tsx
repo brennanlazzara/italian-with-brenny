@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { FaLightbulb } from "react-icons/fa";
+import { InfoIcon } from "@chakra-ui/icons";
 import {
   Box,
   Heading,
@@ -10,36 +10,16 @@ import {
   HStack,
   ScaleFade,
   Badge,
-  Divider,
   useColorModeValue,
   Spinner,
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogBody,
-  AlertDialogFooter,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
   useDisclosure,
-  Grid,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { InfoIcon } from "@chakra-ui/icons";
-import VerbConjugationTable from "./verbTreeTable";
+import VerbTreeGraphDialog from "./modals/VerbTreeGraphDialog";
+import HintDialog from "./modals/HintDialog";
 import PresenteIndicativoLesson from "./modals/PresenteIndicativoLesson";
 
-// Define tables for each verb type
-const PronounRoot = () => <VerbConjugationTable verbType="pronounRoot" />;
-const AreVerbTable = () => <VerbConjugationTable verbType="are" />;
-const EreVerbTable = () => <VerbConjugationTable verbType="ere" />;
-const IreVerbTable = () => <VerbConjugationTable verbType="ire" />;
-
-const FlashCard = () => {
+const PresenteIndicativoCard = () => {
   const [pronoun, setPronoun] = useState("");
   const [verb, setVerb] = useState("");
   const [verbType, setVerbType] = useState("");
@@ -49,15 +29,17 @@ const FlashCard = () => {
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [hasFlippedOnce, setHasFlippedOnce] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef<HTMLButtonElement>(null);
-
   const {
-    isOpen: isModalOpen,
-    onOpen: onModalOpen,
-    onClose: onModalClose,
+    isOpen: isHintOpen,
+    onOpen: onHintOpen,
+    onClose: onHintClose,
   } = useDisclosure();
-
+  const cancelRef = useRef<HTMLButtonElement>(null);
+  const {
+    isOpen: isVerbTreeOpen,
+    onOpen: onVerbTreeOpen,
+    onClose: onVerbTreeClose,
+  } = useDisclosure();
   const lessonModalRef = useRef<{ onLessonModalOpen: () => void }>(null);
 
   useEffect(() => {
@@ -199,7 +181,7 @@ const FlashCard = () => {
       <VStack spacing={4}>
         <HStack spacing={4}>
           <Heading fontSize="xl">Presente Indicativo</Heading>
-          <InfoIcon onClick={onOpen} cursor="pointer" />
+          <InfoIcon onClick={onHintOpen} cursor="pointer" />
         </HStack>
         {isLoading ? (
           <Spinner />
@@ -269,7 +251,7 @@ const FlashCard = () => {
             )}
           </>
         )}
-        <Button colorScheme="green" onClick={onModalOpen}>
+        <Button colorScheme="green" onClick={onVerbTreeOpen}>
           View My Verb Tree Graphs
         </Button>
         <Button
@@ -279,121 +261,22 @@ const FlashCard = () => {
           A Helpful Lesson
         </Button>
 
-        {/* Verb Tree Graph Dialog */}
-        <Modal isOpen={isModalOpen} onClose={onModalClose} size="2xl">
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader textAlign="center">Verb Tree Graphs</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody overflow="auto" p={4}>
-              <Grid templateColumns="repeat(2, 1fr)" gap={4}>
-                <Box mb={4} overflow="hidden">
-                  <Text
-                    textAlign="center"
-                    fontSize="lg"
-                    fontWeight="bold"
-                    mb={2}
-                  >
-                    Root
-                  </Text>
-                  <PronounRoot />
-                </Box>
-                <Box mb={4} overflow="hidden">
-                  <Text
-                    textAlign="center"
-                    fontSize="lg"
-                    fontWeight="bold"
-                    mb={2}
-                  >
-                    ARE
-                  </Text>
-                  <AreVerbTable />
-                </Box>
-                <Box mb={4} overflow="hidden">
-                  <Text
-                    textAlign="center"
-                    fontSize="lg"
-                    fontWeight="bold"
-                    mb={2}
-                  >
-                    ERE
-                  </Text>
-                  <EreVerbTable />
-                </Box>
-                <Box mb={4} overflow="hidden">
-                  <Text
-                    textAlign="center"
-                    fontSize="lg"
-                    fontWeight="bold"
-                    mb={2}
-                  >
-                    IRE
-                  </Text>
-                  <IreVerbTable />
-                </Box>
-              </Grid>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
+        <HintDialog
+          isOpen={isHintOpen}
+          onClose={onHintClose}
+          hint={hint}
+          cancelRef={cancelRef}
+        />
+
+        <VerbTreeGraphDialog
+          isOpen={isVerbTreeOpen}
+          onClose={onVerbTreeClose}
+        />
 
         <PresenteIndicativoLesson ref={lessonModalRef} />
-
-        {/* HINT DIALOG */}
-        <AlertDialog
-          isOpen={isOpen}
-          leastDestructiveRef={cancelRef}
-          onClose={onClose}
-        >
-          <AlertDialogOverlay
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <AlertDialogContent
-              maxW="400px"
-              width="90%"
-              position="relative"
-              mx="auto"
-            >
-              <AlertDialogHeader
-                fontSize="xl"
-                fontWeight="bold"
-                textAlign="center"
-                pb={2}
-              >
-                <HStack justify="center" spacing={2}>
-                  <FaLightbulb color="#F6E05E" /> <Text>Conjugation Hint</Text>
-                </HStack>
-              </AlertDialogHeader>
-              <Divider borderColor="gray.300" borderWidth="2px" />
-              <AlertDialogBody pt={4}>
-                <VStack align="center" spacing={4} py={4}>
-                  <Text fontSize="lg" fontWeight="medium" color="blue.600">
-                    {hint.type}
-                  </Text>
-                  <Text fontSize="md">Common endings:</Text>
-                  <Text fontSize="lg" fontWeight="bold" color="green.600">
-                    {hint.endings.join(" · ")}
-                  </Text>
-                </VStack>
-              </AlertDialogBody>
-              <AlertDialogFooter justifyContent="center">
-                <Button
-                  ref={cancelRef}
-                  onClick={onClose}
-                  colorScheme="blue"
-                  size="lg"
-                  px={8}
-                >
-                  Got it!
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
       </VStack>
     </Box>
   );
 };
 
-export default FlashCard;
+export default PresenteIndicativoCard;
