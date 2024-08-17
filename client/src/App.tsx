@@ -1,4 +1,4 @@
-import Home from "./pages/Home";
+import VerbConjugation from "./pages/VerbConjugation";
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
     <ChakraProvider>
       <ColorModeScript />
       <div className="App">
-        <Home />
+        <VerbConjugation />
       </div>
     </ChakraProvider>
   );

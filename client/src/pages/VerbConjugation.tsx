@@ -9,7 +9,7 @@ import {
 import FlashCard from "../components/FlashCard";
 import Header from "../components/Header";
 
-const Home = () => {
+const VerbConjugation = () => {
   const bgColor = useColorModeValue("gray.50", "gray.900");
   const textColor = useColorModeValue("gray.800", "gray.100");
 
@@ -30,4 +30,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default VerbConjugation;
