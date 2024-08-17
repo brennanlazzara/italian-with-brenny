@@ -220,7 +220,7 @@ const FlashCard = () => {
                   : "purple"
               }
             >
-              Regular {verbType.toUpperCase()} Verb
+              Regular -{verbType.toUpperCase()} Verb
             </Badge>
             <Box
               as={motion.div}
