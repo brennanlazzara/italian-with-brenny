@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-const HelpfulLessonModal = forwardRef((props, ref) => {
+const PresenteIndicativoLesson = forwardRef((props, ref) => {
   const {
     isOpen: isLessonModalOpen,
     onOpen: onLessonModalOpen,
@@ -25,7 +25,9 @@ const HelpfulLessonModal = forwardRef((props, ref) => {
     <Modal isOpen={isLessonModalOpen} onClose={onLessonModalClose} size="lg">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>A Helpful Lesson</ModalHeader>
+        <ModalHeader textAlign="center">
+          <b>A Helpful Lesson</b>
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody p={4}>
           <Text textAlign="center">
@@ -46,4 +48,4 @@ const HelpfulLessonModal = forwardRef((props, ref) => {
   );
 });
 
-export default HelpfulLessonModal;
+export default PresenteIndicativoLesson;

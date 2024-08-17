@@ -31,7 +31,7 @@ import {
 import { motion } from "framer-motion";
 import { InfoIcon } from "@chakra-ui/icons";
 import VerbConjugationTable from "./verbTreeTable";
-import HelpfulLessonModal from "./modals/HelpfulLessonModal";
+import PresenteIndicativoLesson from "./modals/PresenteIndicativoLesson";
 
 // Define tables for each verb type
 const PronounRoot = () => <VerbConjugationTable verbType="pronounRoot" />;
@@ -336,7 +336,7 @@ const FlashCard = () => {
           </ModalContent>
         </Modal>
 
-        <HelpfulLessonModal ref={lessonModalRef} />
+        <PresenteIndicativoLesson ref={lessonModalRef} />
 
         {/* HINT DIALOG */}
         <AlertDialog
