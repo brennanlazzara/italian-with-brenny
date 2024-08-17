@@ -33,10 +33,10 @@ import { InfoIcon } from "@chakra-ui/icons";
 import VerbConjugationTable from "./verbTreeTable";
 
 // Define tables for each verb type
+const FourthVerbTable = () => <VerbConjugationTable verbType="pronounRoot" />;
 const AreVerbTable = () => <VerbConjugationTable verbType="are" />;
 const EreVerbTable = () => <VerbConjugationTable verbType="ere" />;
 const IreVerbTable = () => <VerbConjugationTable verbType="ire" />;
-const FourthVerbTable = () => <VerbConjugationTable verbType="fourthType" />;
 
 const FlashCard = () => {
   const [pronoun, setPronoun] = useState("");
@@ -291,28 +291,48 @@ const FlashCard = () => {
             <ModalBody overflow="auto" p={4}>
               <Grid templateColumns="repeat(2, 1fr)" gap={4}>
                 <Box mb={4} overflow="hidden">
-                  <Text fontSize="lg" fontWeight="bold" mb={2}>
+                  <Text
+                    textAlign="center"
+                    fontSize="lg"
+                    fontWeight="bold"
+                    mb={2}
+                  >
+                    Pronouns
+                  </Text>
+                  <FourthVerbTable />
+                </Box>
+                <Box mb={4} overflow="hidden">
+                  <Text
+                    textAlign="center"
+                    fontSize="lg"
+                    fontWeight="bold"
+                    mb={2}
+                  >
                     ARE
                   </Text>
                   <AreVerbTable />
                 </Box>
                 <Box mb={4} overflow="hidden">
-                  <Text fontSize="lg" fontWeight="bold" mb={2}>
+                  <Text
+                    textAlign="center"
+                    fontSize="lg"
+                    fontWeight="bold"
+                    mb={2}
+                  >
                     ERE
                   </Text>
                   <EreVerbTable />
                 </Box>
                 <Box mb={4} overflow="hidden">
-                  <Text fontSize="lg" fontWeight="bold" mb={2}>
+                  <Text
+                    textAlign="center"
+                    fontSize="lg"
+                    fontWeight="bold"
+                    mb={2}
+                  >
                     IRE
                   </Text>
                   <IreVerbTable />
-                </Box>
-                <Box mb={4} overflow="hidden">
-                  <Text fontSize="lg" fontWeight="bold" mb={2}>
-                    Fourth
-                  </Text>
-                  <FourthVerbTable />
                 </Box>
               </Grid>
             </ModalBody>

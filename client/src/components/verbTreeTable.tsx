@@ -10,14 +10,14 @@ import {
 } from "@chakra-ui/react";
 
 interface VerbConjugationTableProps {
-  verbType: "are" | "ere" | "ire" | "fourthType";
+  verbType: "are" | "ere" | "ire" | "pronounRoot";
 }
 
 const conjugationEndings: { [key: string]: string[] } = {
+  pronounRoot: ["I", "You", "He/She", "We", "You All", "They"],
   are: ["o", "i", "a", "iamo", "ate", "ano"],
   ere: ["o", "i", "e", "iamo", "ete", "ono"],
   ire: ["o", "i", "e", "iamo", "ite", "ono"],
-  fourthType: ["some", "custom", "endings", "for", "fourth", "type"],
 };
 
 function VerbConjugationTable({ verbType }: VerbConjugationTableProps) {
