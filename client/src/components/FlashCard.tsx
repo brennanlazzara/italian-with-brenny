@@ -286,7 +286,7 @@ const FlashCard = () => {
         <Modal isOpen={isModalOpen} onClose={onModalClose} size="2xl">
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Verb Tree Graphs</ModalHeader>
+            <ModalHeader textAlign="center">Verb Tree Graphs</ModalHeader>
             <ModalCloseButton />
             <ModalBody overflow="auto" p={4}>
               <Grid templateColumns="repeat(2, 1fr)" gap={4}>
