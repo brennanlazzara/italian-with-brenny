@@ -31,6 +31,7 @@ import {
 import { motion } from "framer-motion";
 import { InfoIcon } from "@chakra-ui/icons";
 import VerbConjugationTable from "./verbTreeTable";
+import HelpfulLessonModal from "./modals/HelpfulLessonModal";
 
 // Define tables for each verb type
 const PronounRoot = () => <VerbConjugationTable verbType="pronounRoot" />;
@@ -43,8 +44,6 @@ const FlashCard = () => {
   const [verb, setVerb] = useState("");
   const [verbType, setVerbType] = useState("");
   const [verbDefinition, setVerbDefinition] = useState("");
-  const [pronouns, setPronouns] = useState<string[]>([]);
-  const [pronounType, setPronounType] = useState("");
   const [userAnswer, setUserAnswer] = useState("");
   const [isFlipped, setIsFlipped] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -59,11 +58,7 @@ const FlashCard = () => {
     onClose: onModalClose,
   } = useDisclosure();
 
-  const {
-    isOpen: isLessonModalOpen,
-    onOpen: onLessonModalOpen,
-    onClose: onLessonModalClose,
-  } = useDisclosure();
+  const lessonModalRef = useRef<{ onLessonModalOpen: () => void }>(null);
 
   useEffect(() => {
     fetchRandomPronoun();
@@ -83,7 +78,6 @@ const FlashCard = () => {
       if (data && data.pronouns && data.pronouns.length > 0) {
         const randomIndex = Math.floor(Math.random() * data.pronouns.length);
         setPronoun(data.pronouns[randomIndex]);
-        setPronounType(data.type);
       } else {
         throw new Error("No pronouns data received");
       }
@@ -106,7 +100,7 @@ const FlashCard = () => {
       const data = await response.json();
       setVerb(data.infinitive);
       setVerbType(data.type);
-      setVerbDefinition(data.definition); // Store the definition
+      setVerbDefinition(data.definition);
     } catch (error) {
       console.error("Error fetching random verb:", error);
     } finally {
@@ -115,7 +109,7 @@ const FlashCard = () => {
   };
 
   const conjugatePresenteIndicativo = (pronoun: string, verb: string) => {
-    const stem = verb.slice(0, -3); // Remove the -are, -ere, or -ire ending
+    const stem = verb.slice(0, -3);
     const ending = verb.slice(-3);
 
     switch (pronoun) {
@@ -278,7 +272,10 @@ const FlashCard = () => {
         <Button colorScheme="green" onClick={onModalOpen}>
           View My Verb Tree Graphs
         </Button>
-        <Button colorScheme="green" onClick={onLessonModalOpen}>
+        <Button
+          colorScheme="green"
+          onClick={() => lessonModalRef.current?.onLessonModalOpen()}
+        >
           A Helpful Lesson
         </Button>
 
@@ -339,33 +336,7 @@ const FlashCard = () => {
           </ModalContent>
         </Modal>
 
-        {/* Helpful Lesson Modal */}
-        <Modal
-          isOpen={isLessonModalOpen}
-          onClose={onLessonModalClose}
-          size="lg"
-        >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>A Helpful Lesson</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody p={4}>
-              <Text textAlign="center">
-                To conjugate regular Italian verbs in the{" "}
-                <b>*Presente Indicativo* </b>
-                tense, start with the verb's infinitive form. <br /> For{" "}
-                <b>*-ARE* </b>
-                verbs, remove *-ARE* and add endings like *-o*, *-i*, *-a*,
-                *-iamo*, *-ate*, *-ano*. <br /> For <b>*-ERE* </b> verbs, drop
-                *-ERE* and use endings like *-o*, *-i*, *-e*, *-iamo*, *-ete*,
-                *-ono*. <br /> For <b>*-IRE* </b> verbs, remove *-IRE* and
-                attach *-o*, *-i*, *-e*, *-iamo*, *-ite*, *-ono*. <br /> Just
-                follow this pattern to correctly conjugate most verbs in the
-                present tense!
-              </Text>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
+        <HelpfulLessonModal ref={lessonModalRef} />
 
         {/* HINT DIALOG */}
         <AlertDialog
