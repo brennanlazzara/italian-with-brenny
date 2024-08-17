@@ -33,7 +33,7 @@ import { InfoIcon } from "@chakra-ui/icons";
 import VerbConjugationTable from "./verbTreeTable";
 
 // Define tables for each verb type
-const FourthVerbTable = () => <VerbConjugationTable verbType="pronounRoot" />;
+const PronounRoot = () => <VerbConjugationTable verbType="pronounRoot" />;
 const AreVerbTable = () => <VerbConjugationTable verbType="are" />;
 const EreVerbTable = () => <VerbConjugationTable verbType="ere" />;
 const IreVerbTable = () => <VerbConjugationTable verbType="ire" />;
@@ -297,9 +297,9 @@ const FlashCard = () => {
                     fontWeight="bold"
                     mb={2}
                   >
-                    Pronouns
+                    Root
                   </Text>
-                  <FourthVerbTable />
+                  <PronounRoot />
                 </Box>
                 <Box mb={4} overflow="hidden">
                   <Text
