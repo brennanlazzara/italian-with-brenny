@@ -6,9 +6,9 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import PresenteIndicativoCard from "./tenses/indicativo/PresenteIndicativoCard";
+import PresenteIncativo from "./PresenteIndicativo/PresenteIndicativo";
 
-const VerbConjugation = () => {
+const IndicativoConjugation = () => {
   const bgColor = useColorModeValue("gray.50", "gray.900");
   const textColor = useColorModeValue("gray.800", "gray.100");
 
@@ -20,7 +20,7 @@ const VerbConjugation = () => {
             Master Italian verb conjugations with my interactive flashcards!
           </Text>
           <Box w="full" maxW="md">
-            <PresenteIndicativoCard />
+            <PresenteIncativo />
           </Box>
         </VStack>
       </Container>
@@ -28,4 +28,4 @@ const VerbConjugation = () => {
   );
 };
 
-export default VerbConjugation;
+export default IndicativoConjugation;

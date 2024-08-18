@@ -15,11 +15,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import VerbTreeGraphDialog from "../../../components/modals/VerbTreeGraphDialog";
-import HintDialog from "../../../components/modals/HintDialog";
-import PresenteIndicativoLesson from "../../../components/modals/PresenteIndicativoLesson";
+import VerbTreeGraphDialog from "../../../../components/modals/VerbTreeGraphDialog";
+import HintDialog from "../../../../components/modals/HintDialog";
+import PresenteIndicativoLesson from "../../../../components/modals/PresenteIndicativoLesson";
 
-const PresenteIndicativoCard = () => {
+const RegularCard = () => {
   const [pronoun, setPronoun] = useState("");
   const [verb, setVerb] = useState("");
   const [verbType, setVerbType] = useState("");
@@ -196,7 +196,7 @@ const PresenteIndicativoCard = () => {
                   : "purple"
               }
             >
-              Regular -{verbType.toUpperCase()} Verb
+              Irregular -{verbType.toUpperCase()} Verb
             </Badge>
             <Box
               as={motion.div}
@@ -280,4 +280,4 @@ const PresenteIndicativoCard = () => {
   );
 };
 
-export default PresenteIndicativoCard;
+export default RegularCard;
