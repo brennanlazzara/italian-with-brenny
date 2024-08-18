@@ -269,6 +269,7 @@ const PresenteIndicativoCard = () => {
         />
 
         <VerbTreeGraphDialog
+          title="Presente Indicativo Tree Graphs"
           isOpen={isVerbTreeOpen}
           onClose={onVerbTreeClose}
         />

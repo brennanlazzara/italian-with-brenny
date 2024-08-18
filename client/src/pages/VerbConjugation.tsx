@@ -7,7 +7,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import PresenteIndicativoCard from "../components/PresenteIndicativoCard";
-import Header from "../components/Header";
 
 const VerbConjugation = () => {
   const bgColor = useColorModeValue("gray.50", "gray.900");
@@ -17,7 +16,6 @@ const VerbConjugation = () => {
     <Box bg={bgColor} minH="100vh" py={10}>
       <Container maxW="container.xl">
         <VStack spacing={8} align="center">
-          <Header />
           <Text fontSize="xl" color={textColor} textAlign="center">
             Master Italian verb conjugations with my interactive flashcards!
           </Text>

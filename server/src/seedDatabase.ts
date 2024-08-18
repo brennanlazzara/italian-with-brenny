@@ -6,7 +6,7 @@ import Pronoun from "./models/Pronoun";
 dotenv.config();
 
 const verbData = {
-  presenteAreVerbs: [
+  regularAreVerbs: [
     { infinitive: "parlare", definition: "to speak" },
     { infinitive: "mangiare", definition: "to eat" },
     { infinitive: "lavorare", definition: "to work" },
@@ -48,7 +48,7 @@ const verbData = {
     { infinitive: "ordinare", definition: "to order" },
     { infinitive: "cucinare", definition: "to cook" },
   ],
-  presenteEreVerbs: [
+  regularEreVerbs: [
     { infinitive: "credere", definition: "to believe" },
     { infinitive: "scrivere", definition: "to write" },
     { infinitive: "leggere", definition: "to read" },
@@ -65,7 +65,7 @@ const verbData = {
     { infinitive: "crescere", definition: "to grow" },
     { infinitive: "correre", definition: "to run" },
   ],
-  presenteIreVerbs: [
+  regularIreVerbs: [
     { infinitive: "partire", definition: "to leave" },
     { infinitive: "dormire", definition: "to sleep" },
     { infinitive: "sentire", definition: "to hear/feel" },
@@ -113,17 +113,17 @@ const seedDatabase = async () => {
 
     // Construct the verbs array for seeding
     const verbs = [
-      ...verbData.presenteAreVerbs.map((verb) => ({
+      ...verbData.regularAreVerbs.map((verb) => ({
         infinitive: verb.infinitive,
         type: "are",
         definition: verb.definition,
       })),
-      ...verbData.presenteEreVerbs.map((verb) => ({
+      ...verbData.regularEreVerbs.map((verb) => ({
         infinitive: verb.infinitive,
         type: "ere",
         definition: verb.definition,
       })),
-      ...verbData.presenteIreVerbs.map((verb) => ({
+      ...verbData.regularIreVerbs.map((verb) => ({
         infinitive: verb.infinitive,
         type: "ire",
         definition: verb.definition,

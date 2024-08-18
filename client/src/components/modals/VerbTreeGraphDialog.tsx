@@ -20,17 +20,19 @@ const IreVerbTable = () => <VerbConjugationTable verbType="ire" />;
 interface VerbTreeGraphDialogProps {
   isOpen: boolean;
   onClose: () => void;
+  title: string;
 }
 
 const VerbTreeGraphDialog: React.FC<VerbTreeGraphDialogProps> = ({
   isOpen,
   onClose,
+  title,
 }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="2xl">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader textAlign="center">Verb Tree Graphs</ModalHeader>
+        <ModalHeader textAlign="center">{title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody overflow="auto" p={4}>
           <Grid templateColumns="repeat(2, 1fr)" gap={4}>
