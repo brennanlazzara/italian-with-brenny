@@ -11,6 +11,75 @@ Welcome to our Italian Language Learning Program! This interactive software is d
 - [Contributing](#contributing)
 - [License](#license)
 
+## Structure
+
+```
+italian-verb-master/
+│
+├── public/
+│   ├── index.html
+│   ├── favicon.ico
+│   └── manifest.json
+│
+├── src/
+│   ├── components/
+│   │   ├── Header.tsx
+│   │   └── VerbConjugationCard.tsx
+│   │
+│   ├── pages/
+│   │   ├── Home.tsx
+│   │   ├── About.tsx
+│   │   ├── Contact.tsx
+│   │   └── tenses/
+│   │       ├── indicativo/
+│   │       │   ├── Presente.tsx
+│   │       │   ├── PassatoProssimo.tsx
+│   │       │   ├── Imperfetto.tsx
+│   │       │   ├── TrapassatoProssimo.tsx
+│   │       │   ├── PassatoRemoto.tsx
+│   │       │   ├── TrapassatoRemoto.tsx
+│   │       │   ├── FuturoSemplice.tsx
+│   │       │   └── FuturoAnteriore.tsx
+│   │       │
+│   │       ├── congiuntivo/
+│   │       │   ├── Presente.tsx
+│   │       │   ├── Passato.tsx
+│   │       │   ├── Imperfetto.tsx
+│   │       │   └── Trapassato.tsx
+│   │       │
+│   │       ├── condizionale/
+│   │       │   ├── Presente.tsx
+│   │       │   └── Passato.tsx
+│   │       │
+│   │       ├── imperativo/
+│   │       │   └── Presente.tsx
+│   │       │
+│   │       ├── infinito/
+│   │       │   ├── Presente.tsx
+│   │       │   └── Passato.tsx
+│   │       │
+│   │       ├── participio/
+│   │       │   ├── Presente.tsx
+│   │       │   └── Passato.tsx
+│   │       │
+│   │       └── gerundio/
+│   │           ├── Presente.tsx
+│   │           └── Passato.tsx
+│   │
+│   ├── utils/
+│   │   └── conjugationRules.ts
+│   │
+│   ├── styles/
+│   │   └── global.css
+│   │
+│   ├── App.tsx
+│   └── index.tsx
+│
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
 ## Features
 - Interactive lessons covering grammar, vocabulary, and pronunciation
 - Speech recognition for pronunciation practice

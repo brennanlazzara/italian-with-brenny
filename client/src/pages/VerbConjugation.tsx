@@ -6,7 +6,7 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import PresenteIndicativoCard from "../components/PresenteIndicativoCard";
+import PresenteIndicativoCard from "./tenses/indicativo/PresenteIndicativoCard";
 
 const VerbConjugation = () => {
   const bgColor = useColorModeValue("gray.50", "gray.900");

@@ -15,9 +15,9 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import VerbTreeGraphDialog from "./modals/VerbTreeGraphDialog";
-import HintDialog from "./modals/HintDialog";
-import PresenteIndicativoLesson from "./modals/PresenteIndicativoLesson";
+import VerbTreeGraphDialog from "../../../components/modals/VerbTreeGraphDialog";
+import HintDialog from "../../../components/modals/HintDialog";
+import PresenteIndicativoLesson from "../../../components/modals/PresenteIndicativoLesson";
 
 const PresenteIndicativoCard = () => {
   const [pronoun, setPronoun] = useState("");
