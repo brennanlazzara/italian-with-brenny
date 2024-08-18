@@ -180,7 +180,7 @@ const RegularCard = () => {
     >
       <VStack spacing={4}>
         <HStack spacing={4}>
-          <Heading fontSize="xl">Presente Indicativo</Heading>
+          <Heading fontSize="xl">Irregular Verbs</Heading>
           <InfoIcon onClick={onHintOpen} cursor="pointer" />
         </HStack>
         {isLoading ? (
@@ -196,7 +196,7 @@ const RegularCard = () => {
                   : "purple"
               }
             >
-              Irregular -{verbType.toUpperCase()} Verb
+              -{verbType.toUpperCase()}
             </Badge>
             <Box
               as={motion.div}
