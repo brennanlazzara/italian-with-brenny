@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Ref } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
   Box,
@@ -22,6 +22,23 @@ import {
   ChevronDownIcon,
 } from "@chakra-ui/icons";
 import { FaBook, FaLanguage } from "react-icons/fa";
+
+// Add the BulletedMenuItem component
+type BulletedMenuItemProps = {
+  children: React.ReactNode;
+};
+
+const BulletedMenuItem = React.forwardRef(
+  ({ children, ...props }: BulletedMenuItemProps, ref: Ref<HTMLButtonElement> | undefined) => (
+  <MenuItem ref={ref} {...props}>
+    <Flex align="center">
+      <Text as="span" mr={2}>
+        •
+      </Text>
+      {children}
+    </Flex>
+  </MenuItem>
+));
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -133,15 +150,15 @@ const Header = () => {
               </MenuButton>
               <MenuList>
                 {verbTenses.map((mood) => (
-                  <MenuGroup key={mood.name} title={mood.name}>
+                  <MenuGroup
+                    key={mood.name}
+                    title={mood.name}
+                    fontWeight="bold"
+                  >
                     {mood.subtenses.map((tense) => (
-                      <MenuItem
-                        key={tense.path}
-                        as={RouterLink}
-                        to={tense.path}
-                      >
+                      <BulletedMenuItem key={tense.path}>
                         {tense.name}
-                      </MenuItem>
+                      </BulletedMenuItem>
                     ))}
                   </MenuGroup>
                 ))}
