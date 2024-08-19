@@ -1,5 +1,5 @@
 import React, { Ref } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, LinkProps } from "react-router-dom";
 import {
   Box,
   Flex,
@@ -23,14 +23,16 @@ import {
 } from "@chakra-ui/icons";
 import { FaBook, FaLanguage } from "react-icons/fa";
 
-// Add the BulletedMenuItem component
 type BulletedMenuItemProps = {
   children: React.ReactNode;
+  to: string;
 };
 
-const BulletedMenuItem = React.forwardRef(
-  ({ children, ...props }: BulletedMenuItemProps, ref: Ref<HTMLButtonElement> | undefined) => (
-  <MenuItem ref={ref} {...props}>
+const BulletedMenuItem = React.forwardRef<
+  HTMLButtonElement,
+  BulletedMenuItemProps
+>(({ children, to, ...props }, ref) => (
+  <MenuItem ref={ref} as={RouterLink} to={to} {...props}>
     <Flex align="center">
       <Text as="span" mr={2}>
         •
@@ -156,7 +158,7 @@ const Header = () => {
                     fontWeight="bold"
                   >
                     {mood.subtenses.map((tense) => (
-                      <BulletedMenuItem key={tense.path}>
+                      <BulletedMenuItem key={tense.path} to={tense.path}>
                         {tense.name}
                       </BulletedMenuItem>
                     ))}

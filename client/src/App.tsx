@@ -49,39 +49,102 @@ function App() {
               <Route path="/contact" element={<Contact />} />
 
               {/* Indicativo routes */}
-              <Route path="/verb-conjugation/indicativo/presente" element={<PresenteIndicativo />} />
-              <Route path="/verb-conjugation/indicativo/passato-prossimo" element={<IndicativoPassatoProssimo />} />
-              <Route path="/verb-conjugation/indicativo/imperfetto" element={<IndicativoImperfetto />} />
-              <Route path="/verb-conjugation/indicativo/trapassato-prossimo" element={<IndicativoTrapassatoProssimo />} />
-              <Route path="/verb-conjugation/indicativo/passato-remoto" element={<IndicativoPassatoRemoto />} />
-              <Route path="/verb-conjugation/indicativo/trapassato-remoto" element={<IndicativoTrapassatoRemoto />} />
-              <Route path="/verb-conjugation/indicativo/futuro-semplice" element={<IndicativoFuturoSemplice />} />
-              <Route path="/verb-conjugation/indicativo/futuro-anteriore" element={<IndicativoFuturoAnteriore />} />
+              <Route
+                path="/verb-conjugation/indicativo/presente"
+                element={<PresenteIndicativo />}
+              />
+              <Route
+                path="/verb-conjugation/indicativo/passato-prossimo"
+                element={<IndicativoPassatoProssimo />}
+              />
+              <Route
+                path="/verb-conjugation/indicativo/imperfetto"
+                element={<IndicativoImperfetto />}
+              />
+              <Route
+                path="/verb-conjugation/indicativo/trapassato-prossimo"
+                element={<IndicativoTrapassatoProssimo />}
+              />
+              <Route
+                path="/verb-conjugation/indicativo/passato-remoto"
+                element={<IndicativoPassatoRemoto />}
+              />
+              <Route
+                path="/verb-conjugation/indicativo/trapassato-remoto"
+                element={<IndicativoTrapassatoRemoto />}
+              />
+              <Route
+                path="/verb-conjugation/indicativo/futuro-semplice"
+                element={<IndicativoFuturoSemplice />}
+              />
+              <Route
+                path="/verb-conjugation/indicativo/futuro-anteriore"
+                element={<IndicativoFuturoAnteriore />}
+              />
 
               {/* Congiuntivo routes */}
-              <Route path="/verb-conjugation/congiuntivo/presente" element={<CongiuntivoPresente />} />
-              <Route path="/verb-conjugation/congiuntivo/passato" element={<CongiuntivoPassato />} />
-              <Route path="/verb-conjugation/congiuntivo/imperfetto" element={<CongiuntivoImperfetto />} />
-              <Route path="/verb-conjugation/congiuntivo/trapassato" element={<CongiuntivoTrapassato />} />
+              <Route
+                path="/verb-conjugation/congiuntivo/presente"
+                element={<CongiuntivoPresente />}
+              />
+              <Route
+                path="/verb-conjugation/congiuntivo/passato"
+                element={<CongiuntivoPassato />}
+              />
+              <Route
+                path="/verb-conjugation/congiuntivo/imperfetto"
+                element={<CongiuntivoImperfetto />}
+              />
+              <Route
+                path="/verb-conjugation/congiuntivo/trapassato"
+                element={<CongiuntivoTrapassato />}
+              />
 
               {/* Condizionale routes */}
-              <Route path="/verb-conjugation/condizionale/presente" element={<CondizionalePresente />} />
-              <Route path="/verb-conjugation/condizionale/passato" element={<CondizionalePassato />} />
+              <Route
+                path="/verb-conjugation/condizionale/presente"
+                element={<CondizionalePresente />}
+              />
+              <Route
+                path="/verb-conjugation/condizionale/passato"
+                element={<CondizionalePassato />}
+              />
 
               {/* Imperativo route */}
-              <Route path="/verb-conjugation/imperativo/presente" element={<ImperativoPresente />} />
+              <Route
+                path="/verb-conjugation/imperativo/presente"
+                element={<ImperativoPresente />}
+              />
 
               {/* Infinito routes */}
-              <Route path="/verb-conjugation/infinito/presente" element={<InfinitoPresente />} />
-              <Route path="/verb-conjugation/infinito/passato" element={<InfinitoPassato />} />
+              <Route
+                path="/verb-conjugation/infinito/presente"
+                element={<InfinitoPresente />}
+              />
+              <Route
+                path="/verb-conjugation/infinito/passato"
+                element={<InfinitoPassato />}
+              />
 
               {/* Participio routes */}
-              <Route path="/verb-conjugation/participio/presente" element={<ParticipioPresente />} />
-              <Route path="/verb-conjugation/participio/passato" element={<ParticipioPassato />} />
+              <Route
+                path="/verb-conjugation/participio/presente"
+                element={<ParticipioPresente />}
+              />
+              <Route
+                path="/verb-conjugation/participio/passato"
+                element={<ParticipioPassato />}
+              />
 
               {/* Gerundio routes */}
-              <Route path="/verb-conjugation/gerundio/presente" element={<GerundioPresente />} />
-              <Route path="/verb-conjugation/gerundio/passato" element={<GerundioPassato />} />
+              <Route
+                path="/verb-conjugation/gerundio/presente"
+                element={<GerundioPresente />}
+              />
+              <Route
+                path="/verb-conjugation/gerundio/passato"
+                element={<GerundioPassato />}
+              />
             </Routes>
           </Box>
         </Box>
