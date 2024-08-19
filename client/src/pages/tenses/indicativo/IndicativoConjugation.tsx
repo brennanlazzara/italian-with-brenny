@@ -6,7 +6,7 @@ import {
   VStack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import PresenteIncativo from "./PresenteIndicativo/PresenteIndicativo";
+import PresenteIncativo from "./presenteIndicativo/PresenteIndicativo";
 
 const IndicativoConjugation = () => {
   const bgColor = useColorModeValue("gray.50", "gray.900");

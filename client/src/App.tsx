@@ -7,8 +7,8 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 
 // INDICATIVO
-import PresenteIndicativo from "./pages/tenses/indicativo/PresenteIndicativo/PresenteIndicativo";
-import IndicativoPassatoProssimo from "./pages/tenses/indicativo/PassatoProssimo";
+import PresenteIndicativo from "./pages/tenses/indicativo/presenteIndicativo/PresenteIndicativo";
+import IndicativoPassatoProssimo from "./pages/tenses/indicativo/passatoProssimo/PassatoProssimo";
 import IndicativoImperfetto from "./pages/tenses/indicativo/Imperfetto";
 import IndicativoTrapassatoProssimo from "./pages/tenses/indicativo/TrapassatoProssimo";
 import IndicativoPassatoRemoto from "./pages/tenses/indicativo/PassatoRemoto";

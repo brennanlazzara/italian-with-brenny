@@ -1,8 +1,8 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Document, Schema } from "mongoose";
 
 export interface IVerb extends Document {
   infinitive: string;
-  type: 'are' | 'ere' | 'ire';
+  type: "are" | "ere" | "ire";
   conjugations: {
     io: string;
     tu: string;
@@ -13,21 +13,12 @@ export interface IVerb extends Document {
   };
 }
 
-const VerbSchema: Schema = new Schema({
-  infinitive: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  definition: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    enum: ['are', 'ere', 'ire'],
-    required: true
-  },
+const VerbSchema = new mongoose.Schema({
+  infinitive: { type: String, required: true },
+  type: { type: String, required: true },
+  definition: { type: String, required: true },
+  auxiliaryVerb: { type: String, enum: ["avere", "essere"], required: true },
+  isRegular: { type: Boolean, required: true },
 });
 
-export default mongoose.model<IVerb>('Verb', VerbSchema);
+export default mongoose.model<IVerb>("Verb", VerbSchema);
