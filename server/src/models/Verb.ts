@@ -18,7 +18,8 @@ const VerbSchema = new mongoose.Schema({
   type: { type: String, required: true },
   definition: { type: String, required: true },
   auxiliaryVerb: { type: String, enum: ["avere", "essere"], required: true },
-  isRegular: { type: Boolean, required: true },
+  regularPresenteIndicativo: { type: Boolean, required: true },
+  regularPassatoProssimo: { type: Boolean, required: true },
 });
 
 export default mongoose.model<IVerb>("Verb", VerbSchema);

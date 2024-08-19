@@ -17,13 +17,15 @@ import {
 import { motion } from "framer-motion";
 import VerbTreeGraphDialog from "../../../../components/modals/VerbTreeGraphDialog";
 import HintDialog from "../../../../components/modals/HintDialog";
-import PresenteIndicativoLesson from "../../../../components/modals/PresenteIndicativoLesson";
+// import PassatoProssimoLesson from "../../../../components/modals/PassatoProssimoLesson";
 
-const RegularCard = () => {
+const RegularAvereCard = () => {
   const [pronoun, setPronoun] = useState("");
-  const [verb, setVerb] = useState("");
-  const [verbType, setVerbType] = useState("");
-  const [verbDefinition, setVerbDefinition] = useState("");
+  const [verb, setVerb] = useState({
+    infinitive: "",
+    type: "",
+    definition: "",
+  });
   const [userAnswer, setUserAnswer] = useState("");
   const [isFlipped, setIsFlipped] = useState(false);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -80,17 +82,20 @@ const RegularCard = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
+      console.log("Random Verb Data:", data); // Log the fetched data
 
-      // Check if the fetched verb has regularPresenteIndicativo: true
-      if (data.regularPresenteIndicativo === true) {
-        setVerb(data.infinitive);
-        setVerbType(data.type);
-        setVerbDefinition(data.definition);
+      // Check if the verb has auxiliaryVerb: "avere" and isRegular: true
+      if (data.auxiliaryVerb === "avere" && data.regularPassatoProssimo === true) {
+        setVerb({
+          infinitive: data.infinitive,
+          type: data.type,
+          definition: data.definition,
+        });
       } else {
         console.log(
-          "Fetched verb does not meet the criteria of regularPresenteIndicativo: true"
+          "Verb does not meet criteria: auxiliaryVerb 'avere' and isRegular true"
         );
-        // Optionally, you could fetch another verb or handle this case
+        // Optionally, handle this case (e.g., fetch another verb, show a message, etc.)
       }
     } catch (error) {
       console.error("Error fetching random verb:", error);
@@ -99,32 +104,50 @@ const RegularCard = () => {
     }
   };
 
-  const conjugatePresenteIndicativo = (pronoun: string, verb: string) => {
-    const stem = verb.slice(0, -3);
-    const ending = verb.slice(-3);
+  const conjugatePassatoProssimo = (
+    pronoun: string,
+    verb: { infinitive: string; type: string }
+  ) => {
+    const auxiliaryVerb = getAuxiliaryVerb(pronoun);
+    const pastParticiple = getPastParticiple(verb.infinitive, verb.type);
+    return `${auxiliaryVerb} ${pastParticiple}`;
+  };
 
+  const getAuxiliaryVerb = (pronoun: string) => {
     switch (pronoun) {
       case "Io":
-        return `${stem}o`;
+        return "ho";
       case "Tu":
-        return `${stem}i`;
+        return "hai";
       case "Lui/Lei":
-        return `${stem}${ending === "are" ? "a" : "e"}`;
+        return "ha";
       case "Noi":
-        return `${stem}iamo`;
+        return "abbiamo";
       case "Voi":
-        return `${stem}${
-          ending === "are" ? "ate" : ending === "ere" ? "ete" : "ite"
-        }`;
+        return "avete";
       case "Loro":
-        return `${stem}${ending === "are" ? "ano" : "ono"}`;
+        return "hanno";
       default:
-        return verb;
+        return "";
+    }
+  };
+
+  const getPastParticiple = (infinitive: string, verbType: string) => {
+    const stem = infinitive.slice(0, -3);
+    switch (verbType) {
+      case "are":
+        return `${stem}ato`;
+      case "ere":
+        return `${stem}uto`;
+      case "ire":
+        return `${stem}ito`;
+      default:
+        return "";
     }
   };
 
   const checkAnswer = () => {
-    const correctAnswer = conjugatePresenteIndicativo(pronoun, verb);
+    const correctAnswer = conjugatePassatoProssimo(pronoun, verb);
     const isAnswerCorrect =
       userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase();
     setIsCorrect(isAnswerCorrect);
@@ -155,26 +178,23 @@ const RegularCard = () => {
   };
 
   const getHint = () => {
-    if (verbType === "are") {
-      return {
-        type: `This is an -ARE verb. (${verbDefinition})`,
-        endings: ["-o", "-i", "-a", "-iamo", "-ate", "-ano"],
-      };
-    } else if (verbType === "ere") {
-      return {
-        type: `This is an -ERE verb. (${verbDefinition})`,
-        endings: ["-o", "-i", "-e", "-iamo", "-ete", "-ono"],
-      };
-    } else if (verbType === "ire") {
-      return {
-        type: `This is an -IRE verb. (${verbDefinition})`,
-        endings: ["-o", "-i", "-e", "-iamo", "-ite", "-ono"],
-      };
-    }
-    return { type: "", endings: [] };
+    return {
+      type: `This is an -${verb.type.toUpperCase()} verb. (${verb.definition})`,
+      auxiliaryVerbs: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"],
+      pastParticiple: `For -${verb.type} verbs, remove -${verb.type} and add -${
+        verb.type === "are" ? "ato" : verb.type === "ere" ? "uto" : "ito"
+      }`,
+    };
   };
 
-  const hint = getHint();
+  const hint = {
+    type: `This is an -${verb.type.toUpperCase()} verb. (${verb.definition})`,
+    endings: ["ato", "uto", "ito"],
+    auxiliaryVerbs: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"],
+    pastParticiple: `For -${verb.type} verbs, remove -${verb.type} and add -${
+      verb.type === "are" ? "ato" : verb.type === "ere" ? "uto" : "ito"
+    }`,
+  };
 
   return (
     <Box
@@ -189,7 +209,7 @@ const RegularCard = () => {
     >
       <VStack spacing={4}>
         <HStack spacing={4}>
-          <Heading fontSize="xl">Regular Verbs</Heading>
+          <Heading fontSize="xl">Passato Prossimo Regular Verbs (Avere)</Heading>
           <InfoIcon onClick={onHintOpen} cursor="pointer" />
         </HStack>
         {isLoading ? (
@@ -198,14 +218,14 @@ const RegularCard = () => {
           <>
             <Badge
               colorScheme={
-                verbType === "are"
+                verb.type === "are"
                   ? "green"
-                  : verbType === "ere"
+                  : verb.type === "ere"
                   ? "blue"
                   : "purple"
               }
             >
-              -{verbType.toUpperCase()}
+            Avere  -{verb.type.toUpperCase()}
             </Badge>
             <Box
               as={motion.div}
@@ -223,7 +243,7 @@ const RegularCard = () => {
             >
               <ScaleFade in={true} initialScale={0.9}>
                 <Text fontSize="2xl" fontWeight="bold">
-                  {isFlipped ? verb : pronoun}
+                  {isFlipped ? verb.infinitive : pronoun}
                 </Text>
               </ScaleFade>
             </Box>
@@ -233,7 +253,7 @@ const RegularCard = () => {
               </Text>
             )}
             <Input
-              placeholder="Enter conjugation (example: 'Uso')"
+              placeholder="Enter conjugation (example: 'ho parlato')"
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
               onKeyDown={(e) => {
@@ -278,15 +298,15 @@ const RegularCard = () => {
         />
 
         <VerbTreeGraphDialog
-          title="Presente Indicativo Tree Graphs"
+          title="Passato Prossimo Tree Graphs"
           isOpen={isVerbTreeOpen}
           onClose={onVerbTreeClose}
         />
 
-        <PresenteIndicativoLesson ref={lessonModalRef} />
+        {/* <PassatoProssimoLesson ref={lessonModalRef} /> */}
       </VStack>
     </Box>
   );
 };
 
-export default RegularCard;
+export default RegularAvereCard;

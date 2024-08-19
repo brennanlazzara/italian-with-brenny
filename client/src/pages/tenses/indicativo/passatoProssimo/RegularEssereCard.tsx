@@ -17,9 +17,8 @@ import {
 import { motion } from "framer-motion";
 import VerbTreeGraphDialog from "../../../../components/modals/VerbTreeGraphDialog";
 import HintDialog from "../../../../components/modals/HintDialog";
-// import PassatoProssimoLesson from "../../../../components/modals/PassatoProssimoLesson";
 
-const PassatoProssimoRegularCard = () => {
+const RegularEssereCard = () => {
   const [pronoun, setPronoun] = useState("");
   const [verb, setVerb] = useState({
     infinitive: "",
@@ -72,28 +71,40 @@ const PassatoProssimoRegularCard = () => {
     }
   };
 
-const fetchRandomVerb = async () => {
+  const fetchRandomVerb = async () => {
     setIsLoading(true);
     try {
-        const response = await fetch(
-            `${process.env.REACT_APP_API_LOCAL_URL}/api/verbs/random`
-        );
-        if (!response.ok) {
-            throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        console.log("Random Verb Data:", data); // Add console.log statement
+      const response = await fetch(
+        `${process.env.REACT_APP_API_LOCAL_URL}/api/verbs/random`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("Random Verb Data:", data); // Log the fetched data
+
+      // Check if the verb has auxiliaryVerb: "essere" and isRegular: true
+      if (
+        data.auxiliaryVerb === "essere" &&
+        data.regularPassatoProssimo === true
+      ) {
         setVerb({
-            infinitive: data.infinitive,
-            type: data.type,
-            definition: data.definition,
+          infinitive: data.infinitive,
+          type: data.type,
+          definition: data.definition,
         });
+      } else {
+        console.log(
+          "Verb does not meet criteria: auxiliaryVerb 'essere' and regularPassatoProssimo true"
+        );
+        // Optionally, handle this case (e.g., fetch another verb, show a message, etc.)
+      }
     } catch (error) {
-        console.error("Error fetching random verb:", error);
+      console.error("Error fetching random verb:", error);
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
-};
+  };
 
   const conjugatePassatoProssimo = (
     pronoun: string,
@@ -101,23 +112,25 @@ const fetchRandomVerb = async () => {
   ) => {
     const auxiliaryVerb = getAuxiliaryVerb(pronoun);
     const pastParticiple = getPastParticiple(verb.infinitive, verb.type);
-    return `${auxiliaryVerb} ${pastParticiple}`;
+    const agreement = getAgreementSuffix(pronoun);
+    return `${auxiliaryVerb} ${pastParticiple}${agreement}`;
   };
 
   const getAuxiliaryVerb = (pronoun: string) => {
     switch (pronoun) {
       case "Io":
-        return "ho";
+        return "sono";
       case "Tu":
-        return "hai";
-      case "Lui/Lei":
-        return "ha";
+        return "sei";
+      case "Lui":
+      case "Lei":
+        return "è";
       case "Noi":
-        return "abbiamo";
+        return "siamo";
       case "Voi":
-        return "avete";
+        return "siete";
       case "Loro":
-        return "hanno";
+        return "sono";
       default:
         return "";
     }
@@ -132,6 +145,28 @@ const fetchRandomVerb = async () => {
         return `${stem}uto`;
       case "ire":
         return `${stem}ito`;
+      default:
+        return "";
+    }
+  };
+
+  const getAgreementSuffix = (pronoun: string) => {
+    switch (pronoun) {
+      case "Io":
+      case "Tu":
+        return ""; // Defaults to singular, gender-neutral
+      case "Lui":
+        return "o"; // Masculine singular
+      case "Lei":
+        return "a"; // Feminine singular
+      case "Noi":
+        return "i"; // Plural (mixed or masculine)
+      case "Voi":
+        return "i"; // Plural (mixed or masculine)
+      case "Loro":
+        return "i"; // Plural (mixed or masculine)
+      case "Loro (all women)":
+        return "e"; // Feminine plural
       default:
         return "";
     }
@@ -171,7 +206,7 @@ const fetchRandomVerb = async () => {
   const getHint = () => {
     return {
       type: `This is an -${verb.type.toUpperCase()} verb. (${verb.definition})`,
-      auxiliaryVerbs: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"],
+      auxiliaryVerbs: ["sono", "sei", "è", "siamo", "siete", "sono"],
       pastParticiple: `For -${verb.type} verbs, remove -${verb.type} and add -${
         verb.type === "are" ? "ato" : verb.type === "ere" ? "uto" : "ito"
       }`,
@@ -181,7 +216,7 @@ const fetchRandomVerb = async () => {
   const hint = {
     type: `This is an -${verb.type.toUpperCase()} verb. (${verb.definition})`,
     endings: ["ato", "uto", "ito"],
-    auxiliaryVerbs: ["ho", "hai", "ha", "abbiamo", "avete", "hanno"],
+    auxiliaryVerbs: ["sono", "sei", "è", "siamo", "siete", "sono"],
     pastParticiple: `For -${verb.type} verbs, remove -${verb.type} and add -${
       verb.type === "are" ? "ato" : verb.type === "ere" ? "uto" : "ito"
     }`,
@@ -200,7 +235,9 @@ const fetchRandomVerb = async () => {
     >
       <VStack spacing={4}>
         <HStack spacing={4}>
-          <Heading fontSize="xl">Passato Prossimo Regular Verbs</Heading>
+          <Heading fontSize="xl">
+            Passato Prossimo Regular Verbs (Essere)
+          </Heading>
           <InfoIcon onClick={onHintOpen} cursor="pointer" />
         </HStack>
         {isLoading ? (
@@ -216,7 +253,7 @@ const fetchRandomVerb = async () => {
                   : "purple"
               }
             >
-              -{verb.type.toUpperCase()}
+              Essere -{verb.type.toUpperCase()}
             </Badge>
             <Box
               as={motion.div}
@@ -244,7 +281,7 @@ const fetchRandomVerb = async () => {
               </Text>
             )}
             <Input
-              placeholder="Enter conjugation (example: 'ho parlato')"
+              placeholder="Enter conjugation (example: 'sono andato/a')"
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
               onKeyDown={(e) => {
@@ -293,11 +330,9 @@ const fetchRandomVerb = async () => {
           isOpen={isVerbTreeOpen}
           onClose={onVerbTreeClose}
         />
-
-        {/* <PassatoProssimoLesson ref={lessonModalRef} /> */}
       </VStack>
     </Box>
   );
 };
 
-export default PassatoProssimoRegularCard;
+export default RegularEssereCard;
