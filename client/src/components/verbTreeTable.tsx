@@ -11,17 +11,30 @@ import {
 
 interface VerbConjugationTableProps {
   verbType: "are" | "ere" | "ire" | "pronounRoot";
+  tense: "presenteIndicativo" | "passatoProssimo"; // Add more tenses as needed
 }
 
-const conjugationEndings: { [key: string]: string[] } = {
-  pronounRoot: ["I", "You", "He/She", "We", "You All", "They"],
-  are: ["o", "i", "a", "iamo", "ate", "ano"],
-  ere: ["o", "i", "e", "iamo", "ete", "ono"],
-  ire: ["o", "i", "e", "iamo", "ite", "ono"],
+const conjugationEndings: { [key: string]: { [tense: string]: string[] } } = {
+  pronounRoot: {
+    presenteIndicativo: ["I", "You", "He/She", "We", "You All", "They"],
+    passatoProssimo: [],
+  },
+  are: {
+    presenteIndicativo: ["o", "i", "a", "iamo", "ate", "ano"],
+    passatoProssimo: ["ato", "ato", "ato", "ato", "ato", "ato"],
+  },
+  ere: {
+    presenteIndicativo: ["o", "i", "e", "iamo", "ete", "ono"],
+    passatoProssimo: ["uto", "uto", "uto", "uto", "uto", "uto"],
+  },
+  ire: {
+    presenteIndicativo: ["o", "i", "e", "iamo", "ite", "ono"],
+    passatoProssimo: ["ito", "ito", "ito", "ito", "ito", "ito"],
+  },
 };
 
-function VerbConjugationTable({ verbType }: VerbConjugationTableProps) {
-  const endings = conjugationEndings[verbType];
+function VerbConjugationTable({ verbType, tense }: VerbConjugationTableProps) {
+  const endings = conjugationEndings[verbType][tense];
 
   return (
     <TableContainer>

@@ -324,12 +324,13 @@ const RegularEssereCard = () => {
           hint={hint}
           cancelRef={cancelRef}
         />
-
-        <VerbTreeGraphDialog
-          title="Passato Prossimo Tree Graphs"
+        {/* TO DO! ESSERE TABLE POINTING TO PROPER TENSE */}
+        {/* <VerbTreeGraphDialog
+          title="Verb Tree Graphs"
           isOpen={isVerbTreeOpen}
           onClose={onVerbTreeClose}
-        />
+          tense={tense as "presenteIndicativo" | "passatoProssimo"} // Pass the tense here
+        /> */}
       </VStack>
     </Box>
   );

@@ -20,6 +20,7 @@ import HintDialog from "../../../../components/modals/HintDialog";
 // import PassatoProssimoLesson from "../../../../components/modals/PassatoProssimoLesson";
 
 const RegularAvereCard = () => {
+  const [tense, setTense] = useState("presenteIndicativo");  // Default tense
   const [pronoun, setPronoun] = useState("");
   const [verb, setVerb] = useState({
     infinitive: "",
@@ -296,12 +297,12 @@ const RegularAvereCard = () => {
           hint={hint}
           cancelRef={cancelRef}
         />
-
-        <VerbTreeGraphDialog
-          title="Passato Prossimo Tree Graphs"
-          isOpen={isVerbTreeOpen}
-          onClose={onVerbTreeClose}
-        />
+      <VerbTreeGraphDialog
+        title="Verb Tree Graphs"
+        isOpen={isVerbTreeOpen}
+        onClose={onVerbTreeClose}
+        tense={tense as "presenteIndicativo" | "passatoProssimo"}  // Pass the tense here
+      />
 
         {/* <PassatoProssimoLesson ref={lessonModalRef} /> */}
       </VStack>
