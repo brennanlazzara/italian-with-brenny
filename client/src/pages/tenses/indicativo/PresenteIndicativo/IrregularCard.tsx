@@ -74,16 +74,28 @@ const RegularCard = () => {
   const fetchRandomVerb = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_LOCAL_URL}/api/verbs/random`
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      let isIrregular = false;
+      let data = null;
+
+      while (!isIrregular) {
+        const response = await fetch(
+          `${process.env.REACT_APP_API_LOCAL_URL}/api/verbs/random`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        data = await response.json();
+        if (data.regularPresenteIndicativo === false) {
+          isIrregular = true;
+          setVerb(data.infinitive);
+          setVerbType(data.type);
+          setVerbDefinition(data.definition);
+        } else {
+          console.log(
+            "Fetched verb does not meet the criteria of regularPresenteIndicativo: false"
+          );
+        }
       }
-      const data = await response.json();
-      setVerb(data.infinitive);
-      setVerbType(data.type);
-      setVerbDefinition(data.definition);
     } catch (error) {
       console.error("Error fetching random verb:", error);
     } finally {
