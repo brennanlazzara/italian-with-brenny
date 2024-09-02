@@ -103,34 +103,111 @@ const RegularCard = () => {
     }
   };
 
-  const conjugatePresenteIndicativo = (pronoun: string, verb: string) => {
-    const stem = verb.slice(0, -3);
-    const ending = verb.slice(-3);
+  const conjugateIrregularPresenteIndicativo = (
+    pronoun: string,
+    verb: string
+  ) => {
+    const irregularVerbs: { [key: string]: { [key: string]: string } } = {
+      leggere: {
+        Io: "leggo",
+        Tu: "leggi",
+        "Lui/Lei": "legge",
+        Noi: "leggiamo",
+        Voi: "leggete",
+        Loro: "leggono",
+      },
+      pagare: {
+        Io: "pago",
+        Tu: "paghi",
+        "Lui/Lei": "paga",
+        Noi: "paghiamo",
+        Voi: "pagate",
+        Loro: "pagano",
+      },
+      cercare: {
+        Io: "cerco",
+        Tu: "cerchi",
+        "Lui/Lei": "cerca",
+        Noi: "cerchiamo",
+        Voi: "cercate",
+        Loro: "cercano",
+      },
+      andare: {
+        Io: "vado",
+        Tu: "vai",
+        "Lui/Lei": "va",
+        Noi: "andiamo",
+        Voi: "andate",
+        Loro: "vanno",
+      },
+      dare: {
+        Io: "do",
+        Tu: "dai",
+        "Lui/Lei": "dà",
+        Noi: "diamo",
+        Voi: "date",
+        Loro: "danno",
+      },
+      stare: {
+        Io: "sto",
+        Tu: "stai",
+        "Lui/Lei": "sta",
+        Noi: "stiamo",
+        Voi: "state",
+        Loro: "stanno",
+      },
+      sapere: {
+        Io: "so",
+        Tu: "sai",
+        "Lui/Lei": "sa",
+        Noi: "sappiamo",
+        Voi: "sapete",
+        Loro: "sanno",
+      },
+      rimanere: {
+        Io: "rimango",
+        Tu: "rimani",
+        "Lui/Lei": "rimane",
+        Noi: "rimaniamo",
+        Voi: "rimanete",
+        Loro: "rimangono",
+      },
+      venire: {
+        Io: "vengo",
+        Tu: "vieni",
+        "Lui/Lei": "viene",
+        Noi: "veniamo",
+        Voi: "venite",
+        Loro: "vengono",
+      },
+      uscire: {
+        Io: "esco",
+        Tu: "esci",
+        "Lui/Lei": "esce",
+        Noi: "usciamo",
+        Voi: "uscite",
+        Loro: "escono",
+      },
+      dire: {
+        Io: "dico",
+        Tu: "dici",
+        "Lui/Lei": "dice",
+        Noi: "diciamo",
+        Voi: "dite",
+        Loro: "dicono",
+      },
+    };
 
-    switch (pronoun) {
-      case "Io":
-        return `${stem}o`;
-      case "Tu":
-        return `${stem}i`;
-      case "Lui/Lei":
-        return `${stem}${ending === "are" ? "a" : "e"}`;
-      case "Noi":
-        return `${stem}iamo`;
-      case "Voi":
-        return `${stem}${
-          ending === "are" ? "ate" : ending === "ere" ? "ete" : "ite"
-        }`;
-      case "Loro":
-        return `${stem}${ending === "are" ? "ano" : "ono"}`;
-      default:
-        return verb;
+    // Check if the verb is in the irregular verbs list
+    if (irregularVerbs[verb]) {
+      return irregularVerbs[verb][pronoun] || verb;
     }
   };
 
   const checkAnswer = () => {
-    const correctAnswer = conjugatePresenteIndicativo(pronoun, verb);
+    const correctAnswer = conjugateIrregularPresenteIndicativo(pronoun, verb);
     const isAnswerCorrect =
-      userAnswer.trim().toLowerCase() === correctAnswer.toLowerCase();
+      userAnswer.trim().toLowerCase() === (correctAnswer ?? "").toLowerCase();
     setIsCorrect(isAnswerCorrect);
 
     if (isAnswerCorrect) {
@@ -159,23 +236,23 @@ const RegularCard = () => {
   };
 
   const getHint = () => {
-    if (verbType === "are") {
+    if (verbType === "are" && verb === "stare") {
       return {
-        type: `This is an -ARE verb. (${verbDefinition})`,
-        endings: ["-o", "-i", "-a", "-iamo", "-ate", "-ano"],
+        verb: `This is 'Stare'. (${verbDefinition})`,
+        endings: ["-o", "-ai", "-a", "-iamo", "-ate", "-anno"],
       };
-    } else if (verbType === "ere") {
+    } else if (verbType === "ere" && verb === "leggere") {
       return {
-        type: `This is an -ERE verb. (${verbDefinition})`,
+        verb: `This is 'Leggere'. (${verbDefinition})`,
         endings: ["-o", "-i", "-e", "-iamo", "-ete", "-ono"],
       };
-    } else if (verbType === "ire") {
+    } else if (verbType === "ire" && verb === "venire") {
       return {
-        type: `This is an -IRE verb. (${verbDefinition})`,
-        endings: ["-o", "-i", "-e", "-iamo", "-ite", "-ono"],
+        verb: `This is 'Venire'. (${verbDefinition})`,
+        endings: ["-go", "-i", "-e", "-iamo", "-ite", "-gono"],
       };
     }
-    return { type: "", endings: [] };
+    return { verb: "", endings: [] };
   };
 
   const hint = getHint();
@@ -277,7 +354,7 @@ const RegularCard = () => {
         <HintDialog
           isOpen={isHintOpen}
           onClose={onHintClose}
-          hint={hint}
+          hint={hint as unknown as { type: string; endings: string[] }}
           cancelRef={cancelRef}
         />
         {/* TO DO! */}
