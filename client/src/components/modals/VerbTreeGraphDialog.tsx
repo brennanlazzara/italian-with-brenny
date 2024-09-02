@@ -4,67 +4,29 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
+  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Grid,
-  Box,
-  Text,
+  Button,
 } from "@chakra-ui/react";
 import VerbConjugationTable from "../verbTreeTable";
 
-const PronounRoot = ({
-  tense,
-}: {
-  tense: "presenteIndicativo" | "passatoProssimo";
-}) => (
-  <VerbConjugationTable
-    verbType="pronounRoot"
-    tense={tense as "presenteIndicativo" | "passatoProssimo"}
-  />
-);
-const AreVerbTable = ({
-  tense,
-}: {
-  tense: "presenteIndicativo" | "passatoProssimo";
-}) => (
-  <VerbConjugationTable
-    verbType="are"
-    tense={tense as "presenteIndicativo" | "passatoProssimo"}
-  />
-);
-const EreVerbTable = ({
-  tense,
-}: {
-  tense: "presenteIndicativo" | "passatoProssimo";
-}) => (
-  <VerbConjugationTable
-    verbType="ere"
-    tense={tense as "presenteIndicativo" | "passatoProssimo"}
-  />
-);
-const IreVerbTable = ({
-  tense,
-}: {
-  tense: "presenteIndicativo" | "passatoProssimo";
-}) => (
-  <VerbConjugationTable
-    verbType="ire"
-    tense={tense as "presenteIndicativo" | "passatoProssimo"}
-  />
-);
-
 interface VerbTreeGraphDialogProps {
+  title: string;
   isOpen: boolean;
   onClose: () => void;
-  title: string;
-  tense: "presenteIndicativo" | "passatoProssimo"; // Add more tenses as needed
+  tense: "presenteIndicativo" | "passatoProssimo";
+  verbType: "are" | "ere" | "ire" | "pronounRoot" | "irregular";
+  irregularConjugations?: { [key: string]: string };
 }
 
 const VerbTreeGraphDialog: React.FC<VerbTreeGraphDialogProps> = ({
+  title,
   isOpen,
   onClose,
-  title,
   tense,
+  verbType,
+  irregularConjugations,
 }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
@@ -73,25 +35,17 @@ const VerbTreeGraphDialog: React.FC<VerbTreeGraphDialogProps> = ({
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Grid templateColumns="repeat(2, 1fr)" gap={4}>
-            <Box>
-              <Text>ARE Verbs</Text>
-              <AreVerbTable tense={tense} />
-            </Box>
-            <Box>
-              <Text>ERE Verbs</Text>
-              <EreVerbTable tense={tense} />
-            </Box>
-            <Box>
-              <Text>IRE Verbs</Text>
-              <IreVerbTable tense={tense} />
-            </Box>
-            <Box>
-              <Text>Pronoun Root</Text>
-              <PronounRoot tense={tense} />
-            </Box>
-          </Grid>
+          <VerbConjugationTable
+            verbType={verbType}
+            tense={tense}
+            irregularConjugations={irregularConjugations}
+          />
         </ModalBody>
+        <ModalFooter>
+          <Button colorScheme="blue" mr={3} onClick={onClose}>
+            Close
+          </Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );

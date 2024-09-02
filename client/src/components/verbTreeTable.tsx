@@ -10,8 +10,9 @@ import {
 } from "@chakra-ui/react";
 
 interface VerbConjugationTableProps {
-  verbType: "are" | "ere" | "ire" | "pronounRoot";
-  tense: "presenteIndicativo" | "passatoProssimo"; // Add more tenses as needed
+  verbType: "are" | "ere" | "ire" | "pronounRoot" | "irregular";
+  tense: "presenteIndicativo" | "passatoProssimo";
+  irregularConjugations?: { [key: string]: string };
 }
 
 const conjugationEndings: { [key: string]: { [tense: string]: string[] } } = {
@@ -33,8 +34,17 @@ const conjugationEndings: { [key: string]: { [tense: string]: string[] } } = {
   },
 };
 
-function VerbConjugationTable({ verbType, tense }: VerbConjugationTableProps) {
-  const endings = conjugationEndings[verbType][tense];
+function VerbConjugationTable({ verbType, tense, irregularConjugations }: VerbConjugationTableProps) {
+  const endings = verbType === "irregular" && irregularConjugations
+    ? [
+        irregularConjugations["Io"],
+        irregularConjugations["Tu"],
+        irregularConjugations["Lui/Lei"],
+        irregularConjugations["Noi"],
+        irregularConjugations["Voi"],
+        irregularConjugations["Loro"],
+      ]
+    : conjugationEndings[verbType][tense];
 
   return (
     <TableContainer>

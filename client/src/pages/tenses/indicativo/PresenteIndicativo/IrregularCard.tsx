@@ -15,12 +15,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-// import VerbTreeGraphDialog from "../../../../components/modals/VerbTreeGraphDialog";
+import VerbTreeGraphDialog from "../../../../components/modals/VerbTreeGraphDialog";
 import HintDialog from "../../../../components/modals/HintDialog";
 import PresenteIndicativoLesson from "../../../../components/modals/PresenteIndicativoLesson";
 
 const RegularCard = () => {
-  // const [tense, setTense] = useState("presenteIndicativo"); // Default tense
+  const [tense] = useState("presenteIndicativo");
   const [pronoun, setPronoun] = useState("");
   const [verb, setVerb] = useState("");
   const [verbType, setVerbType] = useState("");
@@ -357,14 +357,13 @@ const RegularCard = () => {
           hint={hint as unknown as { type: string; endings: string[] }}
           cancelRef={cancelRef}
         />
-        {/* TO DO! */}
-        {/* <VerbTreeGraphDialog
+        <VerbTreeGraphDialog
           title="Verb Tree Graphs"
           isOpen={isVerbTreeOpen}
           onClose={onVerbTreeClose}
-          tense={tense as "presenteIndicativo" | "passatoProssimo"} // Pass the tense here
-        /> */}
-
+          tense={tense as "presenteIndicativo" | "passatoProssimo"}
+          verbType={"are" || "ere" || "ire"}
+        />
         <PresenteIndicativoLesson ref={lessonModalRef} />
       </VStack>
     </Box>
